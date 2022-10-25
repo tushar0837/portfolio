@@ -1,4 +1,3 @@
-import logo from './logo.svg';
 import './App.css';
 
 function App() {
@@ -6,9 +5,9 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p style={{ position: 'relative', marginTop: 100 }}>
-          Hi Kiwi<div className="App-logo">🥝</div>
-          <p className="tishi">Tishi</p>
+          Hi Kiwi, I miss you!!<div className="App-logo">🥝</div>
         </p>
+        <p className="tishi">Tishi</p>
       </header>
     </div>
   );

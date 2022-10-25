@@ -9,9 +9,9 @@
 }
 
 .tishi {
-  height: 40vmin;
-  position: absolute;
-  margin-top: -20vmin;
+  /* height: 40vmin;
+  position: absolute; */
+  /* margin-top: -20vmin; */
 }
 
 @media (prefers-reduced-motion: no-preference) {
@@ -20,11 +20,11 @@
   }
 }
 
-@media (prefers-reduced-motion: no-preference) {
+/* @media (prefers-reduced-motion: no-preference) {
   .tishi {
     animation: App-logo-spin infinite 20s linear;
   }
-}
+} */
 
 .App-header {
   background-color: #282c34;
