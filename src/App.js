@@ -5,9 +5,11 @@ function App() {
     <div className="App">
       <header className="App-header">
         <p style={{ position: 'relative', marginTop: 100 }}>
-          Hi Kiwi, I miss you!!<div className="App-logo">🥝</div>
+          Hello this is Tushar Batra.
         </p>
-        <p className="tishi">Tishi</p>
+        <p>
+        This website is under development. Please come back later.
+        </p>
       </header>
     </div>
   );
