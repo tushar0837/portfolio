@@ -22,7 +22,7 @@
 
 .App-header {
   background-color: #282c34;
-  padding: 10px 100px;
+  padding: 10px 400px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -31,11 +31,17 @@
   font-size: calc(10px + 2vmin);
   color: white;
 }
+.summary  {
+  line-height: 35px;
+}
 
 /* Add this media query for mobile views */
 @media (max-width: 768px) {
   .App-header {
     padding: 10px 20px;
+  }
+  .summary {
+    line-height: 25px;
   }
 }
 
