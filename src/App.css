@@ -8,12 +8,6 @@
   pointer-events: none;
 }
 
-.tishi {
-  /* height: 40vmin;
-  position: absolute; */
-  /* margin-top: -20vmin; */
-}
-
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
@@ -28,6 +22,7 @@
 
 .App-header {
   background-color: #282c34;
+  padding: 10px 100px;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -35,6 +30,13 @@
   justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
+}
+
+/* Add this media query for mobile views */
+@media (max-width: 768px) {
+  .App-header {
+    padding: 10px 20px;
+  }
 }
 
 .App-link {
