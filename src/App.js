@@ -28,7 +28,7 @@ function App() {
   }}
 />
         <div>
-         <p className="summary">Full stack developer with 8 years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka</p>
+         <p className="summary">Full stack developer with 8 years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.</p>
         </div>
         {/* <a 
           href="/resume.pdf" 
