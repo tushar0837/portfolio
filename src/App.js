@@ -1,11 +1,13 @@
 import './App.css';
 import Typewriter from 'typewriter-effect';
-
-
+import { Tooltip } from 'react-tooltip';
 
 function App() {
   return (
     <div className="App">
+      <Tooltip id="resume" />
+      <Tooltip id="github" />
+      <Tooltip id="linkedin" />
       <div className="App-header">
         <img 
           src="/pp.png" 
@@ -30,23 +32,9 @@ function App() {
         <div>
          <p className="summary">Full stack developer with 8 years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.</p>
         </div>
-        {/* <a 
-          href="/resume.pdf" 
-          download="Tushar_Batra_Resume.pdf"
-          style={{
-            display: 'inline-block',
-            padding: '10px 20px',
-            backgroundColor: '#676767',
-            color: 'white',
-            textDecoration: 'none',
-            borderRadius: '8px',
-            marginTop: '20px'
-          }}
-        >
-          Download Resume
-        </a> */}
         <div>
         <a 
+            data-tooltip-id="linkedin" data-tooltip-content="LinkedIn"
             href="https://www.linkedin.com/in/tushar0837/"
             target="_blank"
             rel="noopener noreferrer"
@@ -64,7 +52,8 @@ function App() {
           >
             <i className="fab fa-linkedin"></i>
           </a>
-          <a 
+          <a
+           data-tooltip-id="github" data-tooltip-content="GitHub"
             href="https://www.github.com/tushar0837/"
             target="_blank"
             rel="noopener noreferrer"
@@ -82,6 +71,27 @@ function App() {
             }}
           >
             <i className="fab fa-github"></i>
+          </a>
+          
+          <a
+           data-tooltip-id="resume" data-tooltip-content="Resume"
+            href="https://bit.ly/batra-resume"
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              display: 'inline-block',
+              padding: '10px',
+              backgroundColor: '#0077B5',
+              color: 'white',
+              textDecoration: 'none',
+              borderRadius: '100%',
+              fontSize: '20px',
+              height: 25,
+              width: 25,
+              marginLeft: 15
+            }}
+          >
+            <i className="fas fa-file"></i>
           </a>
           </div>
       </div>
