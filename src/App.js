@@ -1,10 +1,9 @@
 import './App.css';
 import Typewriter from 'typewriter-effect';
 import { Tooltip } from 'react-tooltip';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 function App() {
-  const navigate = useNavigate();
   return (
     <div className="App">
       <Tooltip id="resume" />
@@ -75,13 +74,7 @@ function App() {
             <i className="fab fa-github"></i>
           </a>
           
-          <a
-           data-tooltip-id="resume" data-tooltip-content="Resume"
-            href=''
-            onClick={() => navigate('/resume')}
-            target="_blank"
-            rel="noopener noreferrer"
-            style={{
+          <Link to="resume" target="_blank" style={{
               display: 'inline-block',
               padding: '10px',
               backgroundColor: '#0077B5',
@@ -92,10 +85,9 @@ function App() {
               height: 25,
               width: 25,
               marginLeft: 15
-            }}
-          >
+            }}>
             <i className="fas fa-file"></i>
-          </a>
+          </Link>
           </div>
       </div>
     </div>

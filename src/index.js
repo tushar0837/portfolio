@@ -25,6 +25,7 @@ root.render(
     <Routes>
       <Route exact path='/' element={<App />}></Route>
       <Route exact path='/resume' element={<Resume />} />
+      <Route exact path='/*' element={<App />} />
     </Routes>
   </Router>
 );
