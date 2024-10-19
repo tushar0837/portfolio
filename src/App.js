@@ -1,8 +1,10 @@
 import './App.css';
 import Typewriter from 'typewriter-effect';
 import { Tooltip } from 'react-tooltip';
+import { useNavigate } from 'react-router-dom';
 
 function App() {
+  const navigate = useNavigate();
   return (
     <div className="App">
       <Tooltip id="resume" />
@@ -75,7 +77,8 @@ function App() {
           
           <a
            data-tooltip-id="resume" data-tooltip-content="Resume"
-            href="https://bit.ly/batra-resume"
+            href=''
+            onClick={() => navigate('/resume')}
             target="_blank"
             rel="noopener noreferrer"
             style={{
