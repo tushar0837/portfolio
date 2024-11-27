@@ -37,6 +37,10 @@ function App() {
         <a 
             data-tooltip-id="linkedin" data-tooltip-content="LinkedIn"
             href="https://www.linkedin.com/in/tushar0837/"
+            onClick={() => window.gtag('event', 'button_click', {
+              'button_name': 'linkedin',
+              'screen_name': 'Home'
+            })}
             target="_blank"
             rel="noopener noreferrer"
             style={{
@@ -55,6 +59,10 @@ function App() {
           </a>
           <a
            data-tooltip-id="github" data-tooltip-content="GitHub"
+           onClick={() => window.gtag('event', 'button_click', {
+            'button_name': 'github',
+            'screen_name': 'Home'
+          })}
             href="https://www.github.com/tushar0837/"
             target="_blank"
             rel="noopener noreferrer"
@@ -86,7 +94,10 @@ function App() {
               width: 25,
               marginLeft: 15
             }}>
-            <i className="fas fa-file"></i>
+            <i onClick={() => window.gtag('event', 'button_click', {
+    'button_name': 'resume',
+    'screen_name': 'Home'
+  })} className="fas fa-file"></i>
           </Link>
           </div>
       </div>
