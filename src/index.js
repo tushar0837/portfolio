@@ -2,21 +2,21 @@ import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useParams, useNavigate } from 'react-router-dom';
 import reportWebVitals from './reportWebVitals';
 
 const Resume = () => {
-  return (
-    <div style={{ height: '200vh' }}>
-      <iframe
-        src='/Resume_TusharBatra.pdf'
-        title='Resume'
-        width='100%'
-        height='100%'
-        style={{ border: 'none' }}
-      />
-    </div>
-  );
+  const navigate = useNavigate();
+
+  useEffect(() => {
+      const pdfUrl = `/Resume_TusharBatra.pdf`;
+
+      // Redirect to the PDF file
+      window.location.href = pdfUrl;
+
+      // Optionally, navigate back if needed
+      return () => navigate(-1);
+  }, [navigate]);
 };
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
