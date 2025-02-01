@@ -7,9 +7,9 @@ import reportWebVitals from './reportWebVitals';
 
 const Resume = () => {
   return (
-    <div style={{ height: '100vh' }}>
+    <div style={{ height: '200vh' }}>
       <iframe
-        src='/Tushar_Resume_Oct24.pdf'
+        src='/Resume_TusharBatra.pdf'
         title='Resume'
         width='100%'
         height='100%'
