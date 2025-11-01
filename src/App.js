@@ -2,8 +2,40 @@ import './App.css';
 import Typewriter from 'typewriter-effect';
 import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
+import { useEffect } from 'react';
 
 function App() {
+  useEffect(() => {
+    const script = document.createElement('script');
+    script.src = 'https://assets.calendly.com/assets/external/widget.js';
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      document.body.removeChild(script);
+    };
+  }, []);
+
+  const scrollToCalendly = () => {
+    const calendlySection = document.querySelector('.calendly-section');
+    if (calendlySection) {
+      calendlySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
+
+  const scrollToTop = () => {
+    // Try multiple methods to ensure compatibility
+    window.scrollTo({
+      top: 0,
+      left: 0,
+      behavior: 'smooth'
+    });
+
+    // Fallback for older browsers
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  };
+
   return (
     <div className="App">
       <Tooltip id="resume" />
@@ -75,6 +107,36 @@ function App() {
               className="fas fa-file"
             ></i>
           </Link>
+        </div>
+
+        <button
+          onClick={scrollToCalendly}
+          className="book-meeting-btn"
+          data-tooltip-id="book-meeting"
+          data-tooltip-content="Schedule a meeting with me"
+        >
+          <i className="fas fa-calendar-alt"></i>
+          Book a Meeting
+        </button>
+        <Tooltip id="book-meeting" />
+
+        <div className="calendly-section">
+          <div className="section-header">
+            <h2 className="section-title">Book a Meeting</h2>
+            <button
+              onClick={scrollToTop}
+              className="back-to-top-btn"
+            >
+              <i className="fas fa-arrow-up"></i>
+              Back to Top
+            </button>
+          </div>
+          <div className="calendly-container">
+            <div
+              className="calendly-inline-widget"
+              data-url="https://calendly.com/tushar0837?background_color=15203c&text_color=00d9f0&primary_color=59ccff"
+            ></div>
+          </div>
         </div>
       </div>
     </div>
