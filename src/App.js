@@ -1,6 +1,5 @@
 import './App.css';
 import Typewriter from 'typewriter-effect';
-import { Tooltip } from 'react-tooltip';
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
@@ -38,9 +37,6 @@ function App() {
 
   return (
     <div className="App">
-      <Tooltip id="resume" />
-      <Tooltip id="github" />
-      <Tooltip id="linkedin" />
       <div className="App-header">
         <img
           src="/pp.png"
@@ -65,8 +61,6 @@ function App() {
         </div>
         <div className="social-links">
           <a
-            data-tooltip-id="linkedin"
-            data-tooltip-content="LinkedIn"
             href="https://www.linkedin.com/in/tushar0837/"
             onClick={() => window.gtag('event', 'button_click', {
               'button_name': 'linkedin',
@@ -75,12 +69,11 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
             className="social-button"
+            aria-label="LinkedIn"
           >
             <i className="fab fa-linkedin"></i>
           </a>
           <a
-            data-tooltip-id="github"
-            data-tooltip-content="GitHub"
             onClick={() => window.gtag('event', 'button_click', {
               'button_name': 'github',
               'screen_name': 'Home'
@@ -89,6 +82,7 @@ function App() {
             target="_blank"
             rel="noopener noreferrer"
             className="social-button"
+            aria-label="GitHub"
           >
             <i className="fab fa-github"></i>
           </a>
@@ -96,8 +90,7 @@ function App() {
             to="resume"
             target="_blank"
             className="social-button"
-            data-tooltip-id="resume"
-            data-tooltip-content="Resume"
+            aria-label="Resume"
           >
             <i
               onClick={() => window.gtag('event', 'button_click', {
@@ -112,13 +105,10 @@ function App() {
         <button
           onClick={scrollToCalendly}
           className="book-meeting-btn"
-          data-tooltip-id="book-meeting"
-          data-tooltip-content="Schedule a meeting with me"
         >
           <i className="fas fa-calendar-alt"></i>
           Book a Meeting
         </button>
-        <Tooltip id="book-meeting" />
 
         <div className="calendly-section">
           <div className="section-header">
