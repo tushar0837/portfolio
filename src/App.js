@@ -48,7 +48,16 @@ function App() {
 
   return (
     <div className="App">
+      <div className="bg-grid-mobile"></div>
       <div className="App-header">
+        <div className="profile-section-mobile">
+          <div className="morph-shape-mobile">
+            <div className="shape-layer-mobile"></div>
+            <div className="shape-layer-mobile"></div>
+            <div className="shape-layer-mobile"></div>
+          </div>
+          <div className="initials-mobile">TB</div>
+        </div>
         <img
           src="/pp.png"
           alt="Tushar Batra"
