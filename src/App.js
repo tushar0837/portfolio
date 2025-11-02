@@ -1,7 +1,7 @@
 import './App.css';
 import Typewriter from 'typewriter-effect';
 import { Link } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 function App() {
   const calculateYearsOfExperience = () => {
@@ -14,6 +14,7 @@ function App() {
   };
 
   const yearsOfExperience = calculateYearsOfExperience();
+  const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
   useEffect(() => {
     const script = document.createElement('script');
@@ -23,6 +24,24 @@ function App() {
 
     return () => {
       document.body.removeChild(script);
+    };
+  }, []);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const bookMeetingBtn = document.querySelector('.book-meeting-btn');
+      if (bookMeetingBtn) {
+        const rect = bookMeetingBtn.getBoundingClientRect();
+        const isVisible = rect.top < window.innerHeight && rect.bottom >= 0;
+        setShowScrollIndicator(!isVisible);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    handleScroll(); // Check initial state
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
     };
   }, []);
 
@@ -127,6 +146,13 @@ function App() {
           <i className="fas fa-calendar-alt"></i>
           Book a Meeting
         </button>
+
+        <div
+          className={`scroll-down-indicator ${!showScrollIndicator ? 'hidden' : ''}`}
+          onClick={scrollToCalendly}
+        >
+          <i className="fas fa-chevron-down"></i>
+        </div>
 
         <div className="calendly-section">
           <div className="section-header">
