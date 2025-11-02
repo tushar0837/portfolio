@@ -1,6 +1,7 @@
 {
-  "short_name": "Portflio",
-  "name": "Tushar Batra Portflio",
+  "short_name": "Tushar Batra",
+  "name": "Tushar Batra | Full Stack Developer",
+  "description": "Full Stack Developer with 10 years of experience in React, React Native, Ruby on Rails, Python, AWS, Google Cloud, and Kafka",
   "icons": [
     {
       "src": "pp.png",
@@ -20,6 +21,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
-  "background_color": "#ffffff"
+  "theme_color": "#0a0e27",
+  "background_color": "#0a0e27"
 }

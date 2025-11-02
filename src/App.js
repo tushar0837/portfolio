@@ -4,6 +4,17 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 
 function App() {
+  const calculateYearsOfExperience = () => {
+    const careerStartDate = new Date('2015-11-25');
+    const currentDate = new Date();
+    const yearsDiff = (currentDate - careerStartDate) / (1000 * 60 * 60 * 24 * 365.25);
+    const decimalPart = yearsDiff - Math.floor(yearsDiff);
+
+    return decimalPart > 0.75 ? Math.ceil(yearsDiff) : Math.floor(yearsDiff);
+  };
+
+  const yearsOfExperience = calculateYearsOfExperience();
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
@@ -40,7 +51,7 @@ function App() {
       <div className="App-header">
         <img
           src="/pp.png"
-          alt="Profile Picture"
+          alt="Tushar Batra"
           className="profile-picture"
         />
         <div className="name-title">Tushar Batra</div>
@@ -56,7 +67,7 @@ function App() {
         </div>
         <div className="summary-container">
           <p className="summary">
-            Full stack developer with 9 years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.
+            Full stack developer with {yearsOfExperience} years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.
           </p>
         </div>
         <div className="social-links">
@@ -91,14 +102,12 @@ function App() {
             target="_blank"
             className="social-button"
             aria-label="Resume"
+            onClick={() => window.gtag('event', 'button_click', {
+              'button_name': 'resume',
+              'screen_name': 'Home'
+            })}
           >
-            <i
-              onClick={() => window.gtag('event', 'button_click', {
-                'button_name': 'resume',
-                'screen_name': 'Home'
-              })}
-              className="fas fa-file"
-            ></i>
+            <i className="fas fa-file-pdf"></i>
           </Link>
         </div>
 
