@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
   <url>
     <loc>https://tusharbatra.com/</loc>
-    <lastmod>2025-11-02</lastmod>
-    <changefreq>monthly</changefreq>
+    <lastmod>2025-11-16</lastmod>
+    <changefreq>weekly</changefreq>
     <priority>1.0</priority>
-  </url>
-  <url>
-    <loc>https://tusharbatra.com/resume</loc>
-    <lastmod>2025-11-02</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <image:image>
+      <image:loc>https://tusharbatra.com/pp.png</image:loc>
+      <image:title>Tushar Batra - Full Stack Developer</image:title>
+    </image:image>
   </url>
 </urlset>
