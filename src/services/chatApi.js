@@ -41,6 +41,10 @@ export const sendChatMessage = async (question, sessionId, onChunk) => {
     
 
     if (!response.ok) {
+      // Handle rate limiting
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please wait before sending more messages.');
+      }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
@@ -94,6 +98,10 @@ export const sendChatMessage = async (question, sessionId, onChunk) => {
     return fullText;
   } catch (error) {
     console.error('Error sending chat message:', error);
+    // Provide user-friendly error messages
+    if (error.message.includes('Rate limit')) {
+      throw new Error('Too many messages! Please wait before chatting again.');
+    }
     throw error;
   }
 };
@@ -112,6 +120,10 @@ export const sendChatMessageSimple = async (question, sessionId) => {
     });
 
     if (!response.ok) {
+      // Handle rate limiting
+      if (response.status === 429) {
+        throw new Error('Rate limit exceeded. Please wait before sending more messages.');
+      }
       throw new Error(`HTTP error! status: ${response.status}`);
     }
 
@@ -119,6 +131,10 @@ export const sendChatMessageSimple = async (question, sessionId) => {
     return text;
   } catch (error) {
     console.error('Error sending chat message:', error);
+    // Provide user-friendly error messages
+    if (error.message.includes('Rate limit')) {
+      throw new Error('Too many messages! Please wait before chatting again.');
+    }
     throw error;
   }
 };
