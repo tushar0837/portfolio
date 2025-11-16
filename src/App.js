@@ -2,6 +2,7 @@ import './App.css';
 import Typewriter from 'typewriter-effect';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
+import Chat from './components/Chat/Chat';
 
 function App() {
   const calculateYearsOfExperience = () => {
@@ -173,6 +174,9 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* AI Chat Component */}
+      <Chat />
     </div>
   );
 }

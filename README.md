@@ -1,3 +1,43 @@
+# Portfolio Website
+
+Personal portfolio website with integrated AI chat powered by FastAPI, LangGraph, and Gemini LLM.
+
+## AI Chat Feature
+
+The portfolio includes an AI-powered chat interface that connects to a FastAPI backend with streaming support.
+
+### Setup
+
+1. Create a `.env` file in the root directory:
+```bash
+cp .env.example .env
+```
+
+2. Update the `REACT_APP_CHAT_API_URL` in `.env` with your FastAPI backend URL:
+```
+REACT_APP_CHAT_API_URL=http://localhost:8000
+```
+
+### FastAPI Backend
+
+The chat expects a FastAPI endpoint at `/chat` that accepts:
+```json
+{
+  "question": "Your question here",
+  "session_id": "unique_session_id"
+}
+```
+
+The backend should support streaming responses for a smooth chat experience.
+
+### Features
+
+- Glassmorphism design matching the portfolio theme
+- Real-time streaming responses
+- Session management with localStorage
+- Mobile-responsive design
+- Typing indicators and animations
+
 # Firebase Deploy
 ### `yarn build`
 
