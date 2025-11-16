@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactMarkdown from 'react-markdown';
 import './ChatMessage.css';
 
 const ChatMessage = ({ message, isUser, isTyping }) => {
@@ -19,9 +20,9 @@ const ChatMessage = ({ message, isUser, isTyping }) => {
             <span></span>
           </div>
         ) : (
-          <p>
-            {message}
-          </p>
+          <div className="markdown-content">
+            <ReactMarkdown>{message}</ReactMarkdown>
+          </div>
         )}
       </div>
     </div>
