@@ -1,8 +1,8 @@
 /* Chat Toggle Button */
 .chat-toggle-btn {
   position: fixed;
-  bottom: 100px; /* Positioned above Tawk.to widget */
-  right: 26px;
+  bottom: 20px; /* Aligned with Tawk.to widget */
+  right: 90px; /* Positioned to the left of Tawk.to */
   width: 60px;
   height: 60px;
   border-radius: 50%;
@@ -32,8 +32,8 @@
 /* Chat Container */
 .chat-container {
   position: fixed;
-  bottom: 180px; /* Positioned above toggle button which is above Tawk.to */
-  right: 26px;
+  bottom: 100px; /* Positioned above toggle button */
+  right: 20px;
   width: 400px;
   height: 550px; /* Slightly reduced to fit better on screen */
   background: rgba(20, 20, 30, 0.95);
@@ -336,11 +336,11 @@
   }
 
   .chat-toggle-btn {
-    width: 56px;
-    height: 56px;
-    bottom: 85px; /* Positioned above Tawk.to on mobile */
-    right: 20px;
-    font-size: 22px;
+    width: 60px;
+    height: 60px;
+    bottom: 90px; /* Positioned above Tawk.to on mobile */
+    right: 26px;
+    font-size: 24px;
     z-index: 999;
   }
 
