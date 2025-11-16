@@ -111,9 +111,38 @@ function App() {
     };
   }, []);
 
+  // Handle URL hash navigation
+  useEffect(() => {
+    const handleHashChange = () => {
+      const hash = window.location.hash;
+      if (hash === '#book-meeting') {
+        setTimeout(() => {
+          const section = document.getElementById('book-meeting');
+          if (section) {
+            section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }, 100);
+      }
+    };
+
+    // Check hash on initial load
+    handleHashChange();
+
+    // Listen for hash changes
+    window.addEventListener('hashchange', handleHashChange);
+
+    return () => {
+      window.removeEventListener('hashchange', handleHashChange);
+    };
+  }, []);
+
   const scrollToCalendly = () => {
     trackCalendlyScroll();
-    const calendlySection = document.querySelector('.calendly-section');
+
+    // Update URL hash without triggering page jump
+    window.history.pushState(null, null, '#book-meeting');
+
+    const calendlySection = document.getElementById('book-meeting');
     if (calendlySection) {
       calendlySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -121,6 +150,10 @@ function App() {
 
   const scrollToTop = () => {
     trackScrollToTop();
+
+    // Remove hash from URL
+    window.history.pushState(null, null, window.location.pathname);
+
     // Try multiple methods to ensure compatibility
     window.scrollTo({
       top: 0,
@@ -213,7 +246,7 @@ function App() {
           <i className="fas fa-chevron-down"></i>
         </div>
 
-        <div className="calendly-section">
+        <div id="book-meeting" className="calendly-section">
           <div className="section-header">
             <h2 className="section-title">Book a Meeting</h2>
             <button

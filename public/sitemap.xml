@@ -11,4 +11,10 @@
       <image:title>Tushar Batra - Full Stack Developer</image:title>
     </image:image>
   </url>
+  <url>
+    <loc>https://tusharbatra.com/#book-meeting</loc>
+    <lastmod>2025-11-16</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
 </urlset>
