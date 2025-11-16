@@ -319,11 +319,20 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .chat-container {
-    width: calc(100vw - 20px);
-    height: calc(100vh - 220px); /* Adjusted for stacked layout */
-    right: 10px;
-    bottom: 160px; /* Positioned above toggle button */
-    border-radius: 16px;
+    width: 100vw;
+    height: 100vh;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 0;
+    z-index: 9999; /* Above everything on mobile */
+  }
+
+  .chat-container.open {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0) scale(1);
   }
 
   .chat-toggle-btn {
@@ -332,18 +341,33 @@
     bottom: 85px; /* Positioned above Tawk.to on mobile */
     right: 20px;
     font-size: 22px;
+    z-index: 999;
   }
 
   .chat-header {
-    padding: 16px;
+    padding: 20px 16px;
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.15) 100%);
   }
 
   .chat-messages {
     padding: 16px;
+    height: calc(100vh - 160px); /* Account for header and input */
   }
 
   .chat-input-container {
     padding: 16px;
+    background: rgba(0, 0, 0, 0.3);
+    backdrop-filter: blur(20px);
+  }
+
+  /* Make header actions more prominent on mobile */
+  .chat-header-actions {
+    gap: 12px;
+  }
+
+  .chat-action-btn {
+    width: 36px;
+    height: 36px;
   }
 }
 

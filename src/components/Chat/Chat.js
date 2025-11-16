@@ -9,7 +9,7 @@ const Chat = () => {
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
-  const [sessionId] = useState(() => getOrCreateSessionId());
+  const [sessionId, setSessionId] = useState(() => getOrCreateSessionId());
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
 
@@ -102,7 +102,9 @@ const Chat = () => {
     trackChatClear();
     setMessages([]);
     clearSession();
-    window.location.reload(); // Reload to get new session
+    // Generate new session ID
+    const newSessionId = getOrCreateSessionId();
+    setSessionId(newSessionId);
   };
 
   const toggleChat = () => {
@@ -112,17 +114,87 @@ const Chat = () => {
     // Track open/close events
     if (newState) {
       trackChatOpen();
+      // Hide Tawk.to widget when AI chat is open
+      if (window.Tawk_API && window.Tawk_API.hideWidget) {
+        window.Tawk_API.hideWidget();
+      }
     } else {
       trackChatClose();
+      // Show Tawk.to widget when AI chat is closed
+      if (window.Tawk_API && window.Tawk_API.showWidget) {
+        window.Tawk_API.showWidget();
+      }
     }
   };
 
-  const handleSuggestionClick = (suggestion) => {
+  const handleSuggestionClick = async (suggestion) => {
     trackChatSuggestion(suggestion);
     setInputValue(suggestion);
-    // Optionally auto-send the message
-    // You can uncomment the next line to auto-send when clicking a suggestion
-    // handleSendMessage({ preventDefault: () => {} });
+
+    // Auto-submit the suggestion
+    if (!isLoading) {
+      // Add user message
+      const userMessage = {
+        id: Date.now(),
+        text: suggestion,
+        isUser: true,
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, userMessage]);
+      setInputValue('');
+      setIsLoading(true);
+
+      // Create a placeholder for bot response
+      const botMessageId = Date.now() + 1;
+      const botMessage = {
+        id: botMessageId,
+        text: '',
+        isUser: false,
+        timestamp: new Date(),
+      };
+
+      setMessages(prev => [...prev, botMessage]);
+
+      try {
+        // Track chat message sent
+        trackChatMessage(suggestion.length);
+
+        let accumulatedText = '';
+
+        await sendChatMessage(
+          suggestion,
+          sessionId,
+          (chunk) => {
+            // Accumulate streamed content
+            accumulatedText += chunk;
+
+            // Update message immediately
+            setMessages(prev =>
+              prev.map(msg =>
+                msg.id === botMessageId
+                  ? { ...msg, text: accumulatedText }
+                  : msg
+              )
+            );
+          }
+        );
+
+      } catch (error) {
+        console.error('Error sending message:', error);
+
+        // Update with error message
+        setMessages(prev =>
+          prev.map(msg =>
+            msg.id === botMessageId
+              ? { ...msg, text: 'Sorry, I encountered an error. Please try again.' }
+              : msg
+          )
+        );
+      } finally {
+        setIsLoading(false);
+      }
+    }
   };
 
   // Suggested questions for quick access
