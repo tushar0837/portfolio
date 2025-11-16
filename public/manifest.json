@@ -1,26 +1,34 @@
 {
   "short_name": "Tushar Batra",
-  "name": "Tushar Batra | Full Stack Developer",
-  "description": "Full Stack Developer with 10 years of experience in React, React Native, Ruby on Rails, Python, AWS, Google Cloud, and Kafka",
+  "name": "Tushar Batra | Full Stack & AI Agent Developer",
+  "description": "Full Stack Developer & AI Agent Developer with 10 years of experience. Specialized in React, React Native, Ruby on Rails, Python, AWS, AI Integration, and Product Architecture.",
   "icons": [
     {
       "src": "pp.png",
       "sizes": "64x64 32x32 24x24 16x16",
-      "type": "image/x-icon"
+      "type": "image/x-icon",
+      "purpose": "any"
     },
     {
       "src": "pp.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "192x192",
+      "purpose": "any maskable"
     },
     {
       "src": "pp.png",
       "type": "image/png",
-      "sizes": "512x512"
+      "sizes": "512x512",
+      "purpose": "any maskable"
     }
   ],
-  "start_url": ".",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "any",
   "theme_color": "#0a0e27",
-  "background_color": "#0a0e27"
+  "background_color": "#0a0e27",
+  "categories": ["business", "productivity", "portfolio"],
+  "lang": "en-US",
+  "dir": "ltr"
 }
