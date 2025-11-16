@@ -1,6 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import ChatMessage from './ChatMessage';
 import { sendChatMessage, getOrCreateSessionId, clearSession } from '../../services/chatApi';
+import { trackChatOpen, trackChatClose, trackChatMessage, trackChatSuggestion, trackChatClear } from '../../utils/analytics';
 import './Chat.css';
 
 const Chat = () => {
@@ -58,6 +59,9 @@ const Chat = () => {
     setMessages(prev => [...prev, botMessage]);
 
     try {
+      // Track chat message sent
+      trackChatMessage(trimmedInput.length);
+
       let accumulatedText = '';
 
       await sendChatMessage(
@@ -95,16 +99,26 @@ const Chat = () => {
   };
 
   const handleClearChat = () => {
+    trackChatClear();
     setMessages([]);
     clearSession();
     window.location.reload(); // Reload to get new session
   };
 
   const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
+    const newState = !isChatOpen;
+    setIsChatOpen(newState);
+
+    // Track open/close events
+    if (newState) {
+      trackChatOpen();
+    } else {
+      trackChatClose();
+    }
   };
 
   const handleSuggestionClick = (suggestion) => {
+    trackChatSuggestion(suggestion);
     setInputValue(suggestion);
     // Optionally auto-send the message
     // You can uncomment the next line to auto-send when clicking a suggestion

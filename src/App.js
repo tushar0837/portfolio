@@ -3,6 +3,7 @@ import Typewriter from 'typewriter-effect';
 import { Link } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import Chat from './components/Chat/Chat';
+import { trackSocialClick, trackCalendlyScroll, trackScrollToTop, trackResumeView, trackScrollDepth, trackTimeOnPage, trackCalendlyEventScheduled } from './utils/analytics';
 
 function App() {
   const calculateYearsOfExperience = () => {
@@ -17,14 +18,78 @@ function App() {
   const yearsOfExperience = calculateYearsOfExperience();
   const [showScrollIndicator, setShowScrollIndicator] = useState(true);
 
+  // Track time on page
+  useEffect(() => {
+    const startTime = Date.now();
+
+    const trackTime = () => {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+      trackTimeOnPage(timeSpent);
+    };
+
+    // Track time when user leaves the page
+    window.addEventListener('beforeunload', trackTime);
+
+    // Also track every 30 seconds for active sessions
+    const interval = setInterval(() => {
+      const timeSpent = Math.floor((Date.now() - startTime) / 1000);
+      if (timeSpent % 30 === 0) {
+        trackTimeOnPage(timeSpent);
+      }
+    }, 30000);
+
+    return () => {
+      window.removeEventListener('beforeunload', trackTime);
+      clearInterval(interval);
+    };
+  }, []);
+
+  // Track scroll depth
+  useEffect(() => {
+    let maxScroll = 0;
+    const trackScroll = () => {
+      const windowHeight = window.innerHeight;
+      const documentHeight = document.documentElement.scrollHeight;
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollPercentage = Math.floor((scrollTop / (documentHeight - windowHeight)) * 100);
+
+      if (scrollPercentage > maxScroll) {
+        maxScroll = scrollPercentage;
+        // Track milestones: 25%, 50%, 75%, 100%
+        if (scrollPercentage >= 25 && scrollPercentage < 50 && maxScroll < 50) {
+          trackScrollDepth(25);
+        } else if (scrollPercentage >= 50 && scrollPercentage < 75 && maxScroll < 75) {
+          trackScrollDepth(50);
+        } else if (scrollPercentage >= 75 && scrollPercentage < 100 && maxScroll < 100) {
+          trackScrollDepth(75);
+        } else if (scrollPercentage === 100) {
+          trackScrollDepth(100);
+        }
+      }
+    };
+
+    window.addEventListener('scroll', trackScroll);
+    return () => window.removeEventListener('scroll', trackScroll);
+  }, []);
+
   useEffect(() => {
     const script = document.createElement('script');
     script.src = 'https://assets.calendly.com/assets/external/widget.js';
     script.async = true;
     document.body.appendChild(script);
 
+    // Listen for Calendly events
+    const handleCalendlyEvent = (e) => {
+      if (e.data.event === 'calendly.event_scheduled') {
+        trackCalendlyEventScheduled();
+      }
+    };
+
+    window.addEventListener('message', handleCalendlyEvent);
+
     return () => {
       document.body.removeChild(script);
+      window.removeEventListener('message', handleCalendlyEvent);
     };
   }, []);
 
@@ -47,6 +112,7 @@ function App() {
   }, []);
 
   const scrollToCalendly = () => {
+    trackCalendlyScroll();
     const calendlySection = document.querySelector('.calendly-section');
     if (calendlySection) {
       calendlySection.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -54,6 +120,7 @@ function App() {
   };
 
   const scrollToTop = () => {
+    trackScrollToTop();
     // Try multiple methods to ensure compatibility
     window.scrollTo({
       top: 0,
@@ -102,10 +169,7 @@ function App() {
         <div className="social-links">
           <a
             href="https://www.linkedin.com/in/tushar0837/"
-            onClick={() => window.gtag('event', 'button_click', {
-              'button_name': 'linkedin',
-              'screen_name': 'Home'
-            })}
+            onClick={() => trackSocialClick('linkedin')}
             target="_blank"
             rel="noopener noreferrer"
             className="social-button"
@@ -114,10 +178,7 @@ function App() {
             <i className="fab fa-linkedin"></i>
           </a>
           <a
-            onClick={() => window.gtag('event', 'button_click', {
-              'button_name': 'github',
-              'screen_name': 'Home'
-            })}
+            onClick={() => trackSocialClick('github')}
             href="https://www.github.com/tushar0837/"
             target="_blank"
             rel="noopener noreferrer"
@@ -131,10 +192,7 @@ function App() {
             target="_blank"
             className="social-button"
             aria-label="Resume"
-            onClick={() => window.gtag('event', 'button_click', {
-              'button_name': 'resume',
-              'screen_name': 'Home'
-            })}
+            onClick={() => trackResumeView()}
           >
             <i className="fas fa-file-pdf"></i>
           </Link>
