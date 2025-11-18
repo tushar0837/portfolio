@@ -11,41 +11,57 @@ const Chat = () => {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [sessionId, setSessionId] = useState(() => getOrCreateSessionId());
   const [showTooltip, setShowTooltip] = useState(false);
-  const [audioEnabled, setAudioEnabled] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const tooltipTimeoutRef = useRef(null);
-  const audioRef = useRef(null);
+  const audioContextRef = useRef(null);
+  const tooltipShownRef = useRef(false);
 
-  // Enable audio on first user interaction
+  // Initialize Web Audio API immediately on component mount
   useEffect(() => {
-    const enableAudio = () => {
-      if (!audioEnabled && audioRef.current) {
-        // Try to play and immediately pause to unlock audio
-        audioRef.current.play()
-          .then(() => {
-            audioRef.current.pause();
-            audioRef.current.currentTime = 0;
-            setAudioEnabled(true);
-            console.log('Audio unlocked and ready!');
-          })
-          .catch(err => console.log('Audio unlock failed, will try on next interaction:', err));
-      }
-    };
+    try {
+      // Create AudioContext immediately
+      const AudioContext = window.AudioContext || window.webkitAudioContext;
+      audioContextRef.current = new AudioContext();
+      console.log('✓ Web Audio API initialized!');
+    } catch (err) {
+      console.log('Audio initialization failed:', err);
+    }
+  }, []);
 
-    // Listen for user interactions
-    document.addEventListener('click', enableAudio, { once: false });
-    document.addEventListener('touchstart', enableAudio, { once: false });
-    document.addEventListener('keydown', enableAudio, { once: false });
-    document.addEventListener('scroll', enableAudio, { once: false });
+  // Function to play notification beep using Web Audio API
+  const playNotificationBeep = () => {
+    if (!audioContextRef.current) {
+      console.log('AudioContext not initialized');
+      return;
+    }
 
-    return () => {
-      document.removeEventListener('click', enableAudio);
-      document.removeEventListener('touchstart', enableAudio);
-      document.removeEventListener('keydown', enableAudio);
-      document.removeEventListener('scroll', enableAudio);
-    };
-  }, [audioEnabled]);
+    try {
+      const ctx = audioContextRef.current;
+      const oscillator = ctx.createOscillator();
+      const gainNode = ctx.createGain();
+
+      oscillator.connect(gainNode);
+      gainNode.connect(ctx.destination);
+
+      // Configure the beep sound (pleasant notification tone)
+      oscillator.frequency.value = 800; // 800 Hz tone
+      oscillator.type = 'sine'; // Smooth sine wave
+
+      // Envelope: fade in and out
+      const now = ctx.currentTime;
+      gainNode.gain.setValueAtTime(0, now);
+      gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01); // Fade in
+      gainNode.gain.linearRampToValueAtTime(0, now + 0.15); // Fade out
+
+      oscillator.start(now);
+      oscillator.stop(now + 0.15); // 150ms beep
+
+      console.log('✓ Notification beep played!');
+    } catch (err) {
+      console.error('Failed to play beep:', err);
+    }
+  };
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -65,22 +81,21 @@ const Chat = () => {
 
   // Show tooltip with sound and bounce effect once after page load
   useEffect(() => {
+    // Prevent running if tooltip already shown
+    if (tooltipShownRef.current) return;
+
     // Show tooltip + sound after 3 seconds (one time only)
     tooltipTimeoutRef.current = setTimeout(() => {
-      if (!isChatOpen && audioEnabled && audioRef.current) {
-        console.log('Showing tooltip and playing sound...');
+      if (!isChatOpen && !tooltipShownRef.current) {
+        console.log('Showing tooltip with notification beep...');
+        tooltipShownRef.current = true; // Mark as shown
         setShowTooltip(true);
 
-        // Play notification sound
-        audioRef.current.currentTime = 0;
-        audioRef.current.play()
-          .then(() => console.log('✓ Notification sound played!'))
-          .catch(err => console.error('Sound play failed:', err));
+        // Play notification beep
+        playNotificationBeep();
 
         // Hide tooltip after 5 seconds
         setTimeout(() => setShowTooltip(false), 5000);
-      } else if (!audioEnabled && !isChatOpen) {
-        console.log('Audio not enabled yet - waiting for user interaction');
       }
     }, 3000);
 
@@ -89,7 +104,7 @@ const Chat = () => {
         clearTimeout(tooltipTimeoutRef.current);
       }
     };
-  }, [isChatOpen, audioEnabled]);
+  }, [isChatOpen]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -261,16 +276,6 @@ const Chat = () => {
 
   return (
     <>
-      {/* Audio element for notification sound */}
-      <audio
-        ref={audioRef}
-        preload="auto"
-        onError={(e) => console.error('Audio load error:', e)}
-        onCanPlay={() => console.log('Audio ready to play')}
-      >
-        <source src="/notification-pop.wav" type="audio/wav" />
-      </audio>
-
       {/* Chat Toggle Button */}
       <div className="chat-toggle-wrapper">
         <button
