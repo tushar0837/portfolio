@@ -10,8 +10,42 @@ const Chat = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isChatOpen, setIsChatOpen] = useState(false);
   const [sessionId, setSessionId] = useState(() => getOrCreateSessionId());
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [audioEnabled, setAudioEnabled] = useState(false);
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
+  const tooltipTimeoutRef = useRef(null);
+  const audioRef = useRef(null);
+
+  // Enable audio on first user interaction
+  useEffect(() => {
+    const enableAudio = () => {
+      if (!audioEnabled && audioRef.current) {
+        // Try to play and immediately pause to unlock audio
+        audioRef.current.play()
+          .then(() => {
+            audioRef.current.pause();
+            audioRef.current.currentTime = 0;
+            setAudioEnabled(true);
+            console.log('Audio unlocked and ready!');
+          })
+          .catch(err => console.log('Audio unlock failed, will try on next interaction:', err));
+      }
+    };
+
+    // Listen for user interactions
+    document.addEventListener('click', enableAudio, { once: false });
+    document.addEventListener('touchstart', enableAudio, { once: false });
+    document.addEventListener('keydown', enableAudio, { once: false });
+    document.addEventListener('scroll', enableAudio, { once: false });
+
+    return () => {
+      document.removeEventListener('click', enableAudio);
+      document.removeEventListener('touchstart', enableAudio);
+      document.removeEventListener('keydown', enableAudio);
+      document.removeEventListener('scroll', enableAudio);
+    };
+  }, [audioEnabled]);
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -28,6 +62,34 @@ const Chat = () => {
       inputRef.current.focus();
     }
   }, [isChatOpen]);
+
+  // Show tooltip with sound and bounce effect once after page load
+  useEffect(() => {
+    // Show tooltip + sound after 3 seconds (one time only)
+    tooltipTimeoutRef.current = setTimeout(() => {
+      if (!isChatOpen && audioEnabled && audioRef.current) {
+        console.log('Showing tooltip and playing sound...');
+        setShowTooltip(true);
+
+        // Play notification sound
+        audioRef.current.currentTime = 0;
+        audioRef.current.play()
+          .then(() => console.log('✓ Notification sound played!'))
+          .catch(err => console.error('Sound play failed:', err));
+
+        // Hide tooltip after 5 seconds
+        setTimeout(() => setShowTooltip(false), 5000);
+      } else if (!audioEnabled && !isChatOpen) {
+        console.log('Audio not enabled yet - waiting for user interaction');
+      }
+    }, 3000);
+
+    return () => {
+      if (tooltipTimeoutRef.current) {
+        clearTimeout(tooltipTimeoutRef.current);
+      }
+    };
+  }, [isChatOpen, audioEnabled]);
 
   const handleSendMessage = async (e) => {
     e.preventDefault();
@@ -114,16 +176,8 @@ const Chat = () => {
     // Track open/close events
     if (newState) {
       trackChatOpen();
-      // Hide Tawk.to widget when AI chat is open
-      if (window.Tawk_API && window.Tawk_API.hideWidget) {
-        window.Tawk_API.hideWidget();
-      }
     } else {
       trackChatClose();
-      // Show Tawk.to widget when AI chat is closed
-      if (window.Tawk_API && window.Tawk_API.showWidget) {
-        window.Tawk_API.showWidget();
-      }
     }
   };
 
@@ -207,18 +261,41 @@ const Chat = () => {
 
   return (
     <>
-      {/* Chat Toggle Button */}
-      <button
-        className={`chat-toggle-btn ${isChatOpen ? 'active' : ''}`}
-        onClick={toggleChat}
-        aria-label="Toggle AI Assistant"
+      {/* Audio element for notification sound */}
+      <audio
+        ref={audioRef}
+        preload="auto"
+        onError={(e) => console.error('Audio load error:', e)}
+        onCanPlay={() => console.log('Audio ready to play')}
       >
-        {isChatOpen ? (
-          <i className="fas fa-times"></i>
-        ) : (
-          <i className="fas fa-robot"></i>
+        <source src="/notification-pop.wav" type="audio/wav" />
+      </audio>
+
+      {/* Chat Toggle Button */}
+      <div className="chat-toggle-wrapper">
+        <button
+          className={`chat-toggle-btn ${isChatOpen ? 'active' : ''} ${showTooltip ? 'bounce' : ''}`}
+          onClick={toggleChat}
+          aria-label="Toggle AI Assistant"
+        >
+          {isChatOpen ? (
+            <i className="fas fa-times"></i>
+          ) : (
+            <i className="fas fa-robot"></i>
+          )}
+        </button>
+
+        {/* Tooltip Message */}
+        {showTooltip && !isChatOpen && (
+          <div className="chat-tooltip">
+            <div className="chat-tooltip-content">
+              <span className="tooltip-icon">👋</span>
+              <span className="tooltip-text">Hi! Ask me anything about Tushar!</span>
+            </div>
+            <div className="chat-tooltip-arrow"></div>
+          </div>
         )}
-      </button>
+      </div>
 
       {/* Chat Window */}
       <div className={`chat-container ${isChatOpen ? 'open' : ''}`}>
