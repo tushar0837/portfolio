@@ -410,13 +410,20 @@
 @media (max-width: 768px) {
   .chat-container {
     width: 100vw;
+    /* Use dvh (dynamic viewport height) which accounts for mobile browser UI */
+    /* Fallback to 100vh for older browsers */
     height: 100vh;
+    height: 100dvh;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
     border-radius: 0;
     z-index: 9999; /* Above everything on mobile */
+    /* Prevent overscroll on iOS */
+    overscroll-behavior: contain;
+    /* Ensure proper positioning */
+    position: fixed;
   }
 
   .chat-container.open {
@@ -449,17 +456,27 @@
   .chat-header {
     padding: 20px 16px;
     background: linear-gradient(135deg, rgba(0, 212, 255, 0.15) 0%, rgba(0, 153, 255, 0.15) 100%);
+    /* Ensure header stays at top */
+    flex-shrink: 0;
   }
 
   .chat-messages {
     padding: 16px;
-    height: calc(100vh - 160px); /* Account for header and input */
+    /* Use flex-grow to fill available space */
+    flex: 1;
+    min-height: 0; /* Important for proper flex behavior */
+    /* Alternative using calc with dvh for older approach */
+    /* height: calc(100dvh - 160px); */
   }
 
   .chat-input-container {
     padding: 16px;
+    /* Add safe area inset for devices with notches/home indicators */
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
     background: rgba(0, 0, 0, 0.3);
     backdrop-filter: blur(20px);
+    /* Ensure input stays at bottom */
+    flex-shrink: 0;
   }
 
   /* Make header actions more prominent on mobile */
