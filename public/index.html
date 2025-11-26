@@ -3,15 +3,25 @@
   <head>
     <meta charset="utf-8" />
 
-    <!-- Preconnect for Performance -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com" />
-    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <!-- Preconnect for Performance (Critical) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin />
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin />
     <link rel="dns-prefetch" href="https://www.google-analytics.com" />
+    <link rel="dns-prefetch" href="https://assets.calendly.com" />
+
+    <!-- Prefetch critical resources -->
+    <link rel="prefetch" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link rel="prefetch" href="https://assets.calendly.com/assets/external/widget.js" />
 
     <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' fill='%230a0e27'/><text x='50' y='70' font-size='60' text-anchor='middle' fill='%2300d4ff' font-family='monospace' font-weight='bold'>TB</text></svg>" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no, viewport-fit=cover" />
     <meta name="theme-color" content="#0a0e27" />
+    <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#0a0e27" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="format-detection" content="telephone=no" />
 
     <!-- SEO Meta Tags -->
     <link rel="canonical" href="https://tusharbatra.com/" />
@@ -22,11 +32,16 @@
       name="description"
       content="Tushar Batra - Full Stack Developer & AI Agent Developer with 10 years of experience in React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka, and AI Integration. Specialized in Product Architecture and AI Development."
     />
-    <meta name="keywords" content="Full Stack Developer, React Developer, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka, Web Development, Mobile Development, Tushar Batra, Software Engineer, India, Freelance Developer, Technical Consultant, AI Agent Developer, AI Development, Artificial Intelligence, Product Architecture, LangChain, OpenAI, Gemini AI, AI Integration, Machine Learning" />
+    <meta name="keywords" content="Full Stack Developer, React Developer, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka, Web Development, Mobile Development, Tushar Batra, Software Engineer, India, Freelance Developer, Technical Consultant, AI Agent Developer, AI Development, Artificial Intelligence, Product Architecture, LangChain, LangGraph, RAG, OpenAI, Gemini AI, AI Integration, Machine Learning, AI Agents" />
     <meta name="author" content="Tushar Batra" />
     <meta name="language" content="English" />
     <meta name="revisit-after" content="7 days" />
     <meta name="rating" content="general" />
+    <meta name="geo.region" content="IN" />
+    <meta name="geo.placename" content="India" />
+    <meta name="referrer" content="strict-origin-when-cross-origin" />
+    <link rel="alternate" hreflang="en" href="https://tusharbatra.com/" />
+    <link rel="alternate" hreflang="x-default" href="https://tusharbatra.com/" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
@@ -95,6 +110,8 @@
         "AI Agent Development",
         "Artificial Intelligence",
         "Product Architecture",
+        "LangGraph",
+        "RAG Systems",
         "React",
         "React Native",
         "Ruby on Rails",
@@ -118,7 +135,6 @@
         "CI/CD",
         "Docker",
         "Kubernetes",
-        "RAG Systems",
         "Chatbot Development"
       ],
       "sameAs": [
@@ -139,8 +155,28 @@
         "@type": "Occupation",
         "name": "Full Stack Developer & AI Agent Developer",
         "occupationalCategory": "15-1252.00",
-        "skills": "React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka, AI Agent Development, Product Architecture, AI Integration, LangChain, OpenAI, Web Development, Mobile Development"
+        "skills": "React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka, AI Agent Development, Product Architecture, AI Integration, LangChain, LangGraph, RAG, OpenAI, Web Development, Mobile Development"
       }
+    }
+    </script>
+
+    <!-- ProfilePage Schema for Enhanced Person SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfilePage",
+      "mainEntity": {
+        "@type": "Person",
+        "@id": "https://tusharbatra.com/#person",
+        "name": "Tushar Batra",
+        "alternateName": "TB",
+        "identifier": "tushar0837"
+      },
+      "name": "Tushar Batra - Professional Portfolio",
+      "url": "https://tusharbatra.com",
+      "dateCreated": "2024-01-01",
+      "dateModified": "2025-11-16",
+      "inLanguage": "en-US"
     }
     </script>
 
@@ -150,13 +186,22 @@
       "@context": "https://schema.org",
       "@type": "WebSite",
       "name": "Tushar Batra Portfolio",
+      "alternateName": "Tushar Batra - Full Stack & AI Developer",
       "url": "https://tusharbatra.com",
-      "description": "Professional portfolio of Tushar Batra, Full Stack Developer",
+      "description": "Professional portfolio of Tushar Batra, Full Stack Developer specializing in AI Agent Development, React, Python, and Cloud Technologies",
       "author": {
         "@type": "Person",
         "name": "Tushar Batra"
       },
-      "inLanguage": "en-US"
+      "inLanguage": "en-US",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://tusharbatra.com/?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
     }
     </script>
 
@@ -177,6 +222,84 @@
           "position": 2,
           "name": "Book a Meeting",
           "item": "https://tusharbatra.com/#book-meeting"
+        }
+      ]
+    }
+    </script>
+
+    <!-- ProfessionalService Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "name": "Tushar Batra - Software Development Services",
+      "url": "https://tusharbatra.com",
+      "logo": "https://tusharbatra.com/pp.png",
+      "image": "https://tusharbatra.com/pp.png",
+      "description": "Professional software development services specializing in Full Stack Development, AI Agent Development, React, Python, and Cloud Solutions",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "addressCountry": "IN"
+      },
+      "geo": {
+        "@type": "GeoCoordinates",
+        "addressCountry": "IN"
+      },
+      "areaServed": {
+        "@type": "Place",
+        "name": "Worldwide"
+      },
+      "serviceType": [
+        "Full Stack Development",
+        "AI Agent Development",
+        "Web Application Development",
+        "Mobile App Development",
+        "Cloud Architecture",
+        "AI Integration",
+        "Technical Consulting"
+      ],
+      "providerMobility": "dynamic"
+    }
+    </script>
+
+    <!-- FAQ Schema for better search results -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "What technologies does Tushar Batra specialize in?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tushar Batra specializes in Full Stack Development with expertise in LangGraph, AI Agents, RAG systems, React, React Native, Ruby on Rails, Python, AWS, Google Cloud, and Kafka. He has 10 years of professional experience building scalable applications."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What AI technologies does Tushar Batra work with?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tushar works extensively with AI technologies including LangGraph for agent workflows, RAG (Retrieval-Augmented Generation) systems, LangChain, OpenAI, Gemini AI, and custom AI agent development for various business applications."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "How can I hire Tushar Batra for my project?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "You can book a meeting directly through the portfolio website at https://tusharbatra.com/#book-meeting to discuss your project requirements and get started."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "What kind of projects has Tushar Batra worked on?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Tushar has worked on full stack web applications, mobile apps using React Native, AI-powered chatbots and agents, cloud infrastructure on AWS and Google Cloud, microservices architecture, and product architecture consulting for various industries."
+          }
         }
       ]
     }

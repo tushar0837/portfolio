@@ -30,7 +30,16 @@ root.render(
   </Router>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals();
+// Send Core Web Vitals to Google Analytics for SEO monitoring
+// Learn more: https://bit.ly/CRA-vitals
+reportWebVitals((metric) => {
+  // Send to Google Analytics 4
+  if (window.gtag) {
+    window.gtag('event', metric.name, {
+      event_category: 'Web Vitals',
+      value: Math.round(metric.name === 'CLS' ? metric.value * 1000 : metric.value),
+      event_label: metric.id,
+      non_interaction: true,
+    });
+  }
+});

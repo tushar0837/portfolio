@@ -168,92 +168,111 @@ function App() {
 
   return (
     <div className="App">
-      <div className="bg-grid-mobile"></div>
-      <div className="App-header">
-        <div className="profile-section-mobile">
-          <div className="morph-shape-mobile">
+      <div className="bg-grid-mobile" aria-hidden="true"></div>
+
+      {/* Main Content - Semantic HTML5 */}
+      <main className="App-header" role="main">
+        {/* Hero Section */}
+        <header className="profile-section-mobile" aria-label="Profile Header">
+          <div className="morph-shape-mobile" aria-hidden="true">
             <div className="shape-layer-mobile"></div>
             <div className="shape-layer-mobile"></div>
             <div className="shape-layer-mobile"></div>
           </div>
-          <div className="initials-mobile">TB</div>
-        </div>
-        <img
-          src="/pp.png"
-          alt="Tushar Batra"
-          className="profile-picture"
-        />
-        <div className="name-title">Tushar Batra</div>
-        <div className="typewriter-container">
-          <Typewriter
-            changeDeleteSpeed={1000}
-            options={{
-              strings: ['More than a Web Developer', 'Located in India'],
-              autoStart: true,
-              loop: true,
-            }}
+          <div className="initials-mobile" aria-hidden="true">TB</div>
+        </header>
+
+        <article itemScope itemType="https://schema.org/Person">
+          <img
+            src="/pp.png"
+            alt="Tushar Batra - Full Stack Developer and AI Agent Developer"
+            className="profile-picture"
+            itemProp="image"
+            width="150"
+            height="150"
+            loading="eager"
           />
-        </div>
-        <div className="summary-container">
-          <p className="summary">
-            Full stack developer with {yearsOfExperience} years of experience, proficient in a range of technologies including React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.
-          </p>
-        </div>
-        <div className="social-links">
-          <a
-            href="https://www.linkedin.com/in/tushar0837/"
-            onClick={() => trackSocialClick('linkedin')}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-button"
-            aria-label="LinkedIn"
-          >
-            <i className="fab fa-linkedin"></i>
-          </a>
-          <a
-            onClick={() => trackSocialClick('github')}
-            href="https://www.github.com/tushar0837/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="social-button"
-            aria-label="GitHub"
-          >
-            <i className="fab fa-github"></i>
-          </a>
-          <Link
-            to="resume"
-            target="_blank"
-            className="social-button"
-            aria-label="Resume"
-            onClick={() => trackResumeView()}
-          >
-            <i className="fas fa-file-pdf"></i>
-          </Link>
-        </div>
+          <h1 className="name-title" itemProp="name">Tushar Batra</h1>
+          <div className="typewriter-container" role="status" aria-live="polite">
+            <Typewriter
+              changeDeleteSpeed={1000}
+              options={{
+                strings: ['More than a Web Developer', 'Located in India'],
+                autoStart: true,
+                loop: true,
+              }}
+            />
+          </div>
+          <section className="summary-container">
+            <p className="summary" itemProp="description">
+              Full stack developer with {yearsOfExperience} years of experience, proficient in a range of technologies including LangGraph, AI Agents, RAG, React, React Native, Ruby on Rails, Python, AWS, Google Cloud, Kafka.
+            </p>
+          </section>
 
-        <button
-          onClick={scrollToCalendly}
-          className="book-meeting-btn"
-        >
-          <i className="fas fa-calendar-alt"></i>
-          Book a Meeting
-        </button>
+          {/* Social Links Section */}
+          <nav className="social-links" aria-label="Social Media Links">
+            <a
+              href="https://www.linkedin.com/in/tushar0837/"
+              onClick={() => trackSocialClick('linkedin')}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-button"
+              aria-label="Visit Tushar Batra's LinkedIn Profile"
+              itemProp="sameAs"
+            >
+              <i className="fab fa-linkedin" aria-hidden="true"></i>
+            </a>
+            <a
+              onClick={() => trackSocialClick('github')}
+              href="https://www.github.com/tushar0837/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="social-button"
+              aria-label="Visit Tushar Batra's GitHub Profile"
+              itemProp="sameAs"
+            >
+              <i className="fab fa-github" aria-hidden="true"></i>
+            </a>
+            <Link
+              to="resume"
+              target="_blank"
+              className="social-button"
+              aria-label="Download Tushar Batra's Resume (PDF)"
+              onClick={() => trackResumeView()}
+            >
+              <i className="fas fa-file-pdf" aria-hidden="true"></i>
+            </Link>
+          </nav>
 
-        <div
-          className={`scroll-down-indicator ${!showScrollIndicator ? 'hidden' : ''}`}
-          onClick={scrollToCalendly}
-        >
-          <i className="fas fa-chevron-down"></i>
-        </div>
+          <button
+            onClick={scrollToCalendly}
+            className="book-meeting-btn"
+            aria-label="Scroll to book a meeting section"
+          >
+            <i className="fas fa-calendar-alt" aria-hidden="true"></i>
+            Book a Meeting
+          </button>
 
-        <div id="book-meeting" className="calendly-section">
+          <button
+            className={`scroll-down-indicator ${!showScrollIndicator ? 'hidden' : ''}`}
+            onClick={scrollToCalendly}
+            aria-label="Scroll down to see more content"
+            aria-hidden={!showScrollIndicator}
+          >
+            <i className="fas fa-chevron-down" aria-hidden="true"></i>
+          </button>
+        </article>
+
+        {/* Calendly Booking Section */}
+        <section id="book-meeting" className="calendly-section" aria-labelledby="calendly-heading">
           <div className="section-header">
-            <h2 className="section-title">Book a Meeting</h2>
+            <h2 id="calendly-heading" className="section-title">Book a Meeting</h2>
             <button
               onClick={scrollToTop}
               className="back-to-top-btn"
+              aria-label="Scroll back to top of page"
             >
-              <i className="fas fa-arrow-up"></i>
+              <i className="fas fa-arrow-up" aria-hidden="true"></i>
               Back to Top
             </button>
           </div>
@@ -261,13 +280,17 @@ function App() {
             <div
               className="calendly-inline-widget"
               data-url="https://calendly.com/tushar0837?background_color=15203c&text_color=00d9f0&primary_color=59ccff"
+              role="region"
+              aria-label="Calendly booking widget"
             ></div>
           </div>
-        </div>
-      </div>
+        </section>
+      </main>
 
       {/* AI Chat Component */}
-      <Chat />
+      <aside aria-label="AI Assistant Chat">
+        <Chat />
+      </aside>
     </div>
   );
 }

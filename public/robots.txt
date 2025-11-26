@@ -1,4 +1,34 @@
 # https://www.robotstxt.org/robotstxt.html
+# Optimized robots.txt for better SEO crawling
+
+# Allow all search engines
 User-agent: *
 Disallow:
+Crawl-delay: 1
+
+# Allow Googlebot specifically
+User-agent: Googlebot
+Disallow:
+Crawl-delay: 0
+
+# Allow Googlebot Image
+User-agent: Googlebot-Image
+Disallow:
+
+# Allow Bingbot
+User-agent: Bingbot
+Disallow:
+Crawl-delay: 1
+
+# Block common bad bots
+User-agent: AhrefsBot
+Crawl-delay: 10
+
+User-agent: SemrushBot
+Crawl-delay: 10
+
+# Sitemap location
 Sitemap: https://tusharbatra.com/sitemap.xml
+
+# Host (for Yandex)
+Host: https://tusharbatra.com
