@@ -184,7 +184,7 @@ function App() {
 
         <article itemScope itemType="https://schema.org/Person">
           <img
-            src="/pp.png"
+            src="/pp_1.png"
             alt="Tushar Batra - Full Stack Developer and AI Agent Developer"
             className="profile-picture"
             itemProp="image"
