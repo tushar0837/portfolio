@@ -18,50 +18,52 @@ const Chat = () => {
   const tooltipShownRef = useRef(false);
 
   // Initialize Web Audio API immediately on component mount
-  useEffect(() => {
-    try {
-      // Create AudioContext immediately
-      const AudioContext = window.AudioContext || window.webkitAudioContext;
-      audioContextRef.current = new AudioContext();
-      console.log('✓ Web Audio API initialized!');
-    } catch (err) {
-      console.log('Audio initialization failed:', err);
-    }
-  }, []);
+  // COMMENTED OUT: Audio causing issues
+  // useEffect(() => {
+  //   try {
+  //     // Create AudioContext immediately
+  //     const AudioContext = window.AudioContext || window.webkitAudioContext;
+  //     audioContextRef.current = new AudioContext();
+  //     console.log('✓ Web Audio API initialized!');
+  //   } catch (err) {
+  //     console.log('Audio initialization failed:', err);
+  //   }
+  // }, []);
 
   // Function to play notification beep using Web Audio API
-  const playNotificationBeep = () => {
-    if (!audioContextRef.current) {
-      console.log('AudioContext not initialized');
-      return;
-    }
+  // COMMENTED OUT: Audio causing issues
+  // const playNotificationBeep = () => {
+  //   if (!audioContextRef.current) {
+  //     console.log('AudioContext not initialized');
+  //     return;
+  //   }
 
-    try {
-      const ctx = audioContextRef.current;
-      const oscillator = ctx.createOscillator();
-      const gainNode = ctx.createGain();
+  //   try {
+  //     const ctx = audioContextRef.current;
+  //     const oscillator = ctx.createOscillator();
+  //     const gainNode = ctx.createGain();
 
-      oscillator.connect(gainNode);
-      gainNode.connect(ctx.destination);
+  //     oscillator.connect(gainNode);
+  //     gainNode.connect(ctx.destination);
 
-      // Configure the beep sound (pleasant notification tone)
-      oscillator.frequency.value = 800; // 800 Hz tone
-      oscillator.type = 'sine'; // Smooth sine wave
+  //     // Configure the beep sound (pleasant notification tone)
+  //     oscillator.frequency.value = 800; // 800 Hz tone
+  //     oscillator.type = 'sine'; // Smooth sine wave
 
-      // Envelope: fade in and out
-      const now = ctx.currentTime;
-      gainNode.gain.setValueAtTime(0, now);
-      gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01); // Fade in
-      gainNode.gain.linearRampToValueAtTime(0, now + 0.15); // Fade out
+  //     // Envelope: fade in and out
+  //     const now = ctx.currentTime;
+  //     gainNode.gain.setValueAtTime(0, now);
+  //     gainNode.gain.linearRampToValueAtTime(0.3, now + 0.01); // Fade in
+  //     gainNode.gain.linearRampToValueAtTime(0, now + 0.15); // Fade out
 
-      oscillator.start(now);
-      oscillator.stop(now + 0.15); // 150ms beep
+  //     oscillator.start(now);
+  //     oscillator.stop(now + 0.15); // 150ms beep
 
-      console.log('✓ Notification beep played!');
-    } catch (err) {
-      console.error('Failed to play beep:', err);
-    }
-  };
+  //     console.log('✓ Notification beep played!');
+  //   } catch (err) {
+  //     console.error('Failed to play beep:', err);
+  //   }
+  // };
 
   // Auto-scroll to bottom when new messages arrive
   const scrollToBottom = () => {
@@ -92,7 +94,8 @@ const Chat = () => {
         setShowTooltip(true);
 
         // Play notification beep
-        playNotificationBeep();
+        // COMMENTED OUT: Audio causing issues
+        // playNotificationBeep();
 
         // Hide tooltip after 5 seconds
         setTimeout(() => setShowTooltip(false), 5000);
