@@ -14,7 +14,7 @@ const Chat = () => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const tooltipTimeoutRef = useRef(null);
-  const audioContextRef = useRef(null);
+  // const audioContextRef = useRef(null); // Commented out - audio disabled
   const tooltipShownRef = useRef(false);
 
   // Initialize Web Audio API immediately on component mount
