@@ -3,9 +3,16 @@
 const API_BASE_URL = process.env.REACT_APP_CHAT_API_URL || 'http://localhost:8000';
 const LOCALHOST_TOKEN = process.env.REACT_APP_LOCALHOST_TOKEN;
 
+// Debug logging
+console.log('Chat API Configuration:', {
+  API_BASE_URL,
+  hasToken: !!LOCALHOST_TOKEN,
+  tokenPreview: LOCALHOST_TOKEN ? `${LOCALHOST_TOKEN.substring(0, 5)}...` : 'NOT SET'
+});
+
 /**
  * Get headers for API requests
- * Includes X-API-Token for localhost development
+ * Includes X-API-Token when available
  * @returns {Object} - Headers object
  */
 const getHeaders = () => {
@@ -13,13 +20,12 @@ const getHeaders = () => {
     'Content-Type': 'application/json',
   };
 
-  // Add token for localhost requests
-  if (API_BASE_URL.includes('localhost') || API_BASE_URL.includes('127.0.0.1')) {
-    if (LOCALHOST_TOKEN) {
-      headers['X-API-Token'] = LOCALHOST_TOKEN;
-    } else {
-      console.warn('Warning: Localhost detected but REACT_APP_LOCALHOST_TOKEN is not set!');
-    }
+  // Add token if available (for both localhost and production)
+  if (LOCALHOST_TOKEN) {
+    headers['X-API-Token'] = LOCALHOST_TOKEN;
+    console.log('✓ X-API-Token added to headers');
+  } else {
+    console.warn('⚠️ Warning: REACT_APP_LOCALHOST_TOKEN is not set!');
   }
 
   return headers;
@@ -34,9 +40,14 @@ const getHeaders = () => {
  */
 export const sendChatMessage = async (question, sessionId, onChunk) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/chat?question=${question}&session_id=${sessionId}`, {
+    const headers = getHeaders();
+    const url = `${API_BASE_URL}/chat?question=${encodeURIComponent(question)}&session_id=${sessionId}`;
+
+    console.log('Sending chat request:', { url, headers });
+
+    const response = await fetch(url, {
       method: 'GET',
-      headers: getHeaders()
+      headers
     });
     
 

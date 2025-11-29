@@ -174,12 +174,12 @@ function App() {
       <main className="App-header" role="main">
         {/* Hero Section */}
         <header className="profile-section-mobile" aria-label="Profile Header">
-          <div className="morph-shape-mobile" aria-hidden="true">
-            <div className="shape-layer-mobile"></div>
-            <div className="shape-layer-mobile"></div>
-            <div className="shape-layer-mobile"></div>
-          </div>
-          <div className="initials-mobile" aria-hidden="true">TB</div>
+          <img
+            src="/pp_1.png"
+            alt="Tushar Batra - Full Stack Developer"
+            className="profile-picture-mobile"
+            loading="eager"
+          />
         </header>
 
         <article itemScope itemType="https://schema.org/Person">

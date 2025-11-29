@@ -364,6 +364,7 @@ const Chat = () => {
                 message={msg.text}
                 isUser={msg.isUser}
                 isTyping={!msg.isUser && !msg.text && isLoading}
+                onLinkClick={() => setIsChatOpen(false)}
               />
             ))
           )}
